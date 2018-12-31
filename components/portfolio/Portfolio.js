@@ -29,7 +29,8 @@ class Portfolio extends Component {
   }
 
   loadAccounts = () => {
-    return [ { address : "TBCKCAmFEdrGY4xhTkbWDRNjDZHNXk129r" } ];
+    return [ { address : "TBCKCAmFEdrGY4xhTkbWDRNjDZHNXk129r", balance : 1.001 },
+             { address : "TLUJk2e4bygvCZo7WTCZU33WaTwSbfVu3v", balance : 2.002 }];
     //return new Account("TBCKCAmFEdrGY4xhTkbWDRNjDZHNXk129r");
   }
 }

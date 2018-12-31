@@ -1,15 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import { Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Address from './Address';
 
-class Account extends Component {
+
+class Address extends Component {
 
 
   constructor(props) {
     super(props);
     this.state = {
       address: props.address,
-      balance: props.balance
     };
   }
 
@@ -17,24 +16,26 @@ class Account extends Component {
     if(nextProps.address !== this.props.address) {
       this.setState({ address: nextProps.address});
     }
-    if(nextProps.balance !== this.props.balance) {
-      this.setState({ balance: nextProps.balance});
-    }
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.getStartedText}>
-            <Address address={this.state.address} />
-        </Text>
-        <Text style={styles.getStartedText}>{this.state.balance}</Text>
-      </View>
+      <Text style={styles.getStartedText}>
+        {this.getAddressAbbr(this.state.address)}
+      </Text>
     )
   }
+
+  getAddressAbbr(address) {
+    let first4 = address.substring(0, 4);
+    let last4 = address.substring(address.length - 5);
+
+    return first4 + '--=--' + last4;
+  }
+
 }
 
-export default Account;
+export default Address;
 
 
 const styles = StyleSheet.create({

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
+import Account from './Account';
 
 class AccountList extends Component {
 
@@ -30,7 +30,7 @@ class AccountList extends Component {
     const rows = this.state.accounts.map((row, index) => {
       return (
         <View key={index} style={styles.container}>
-          <Text style={styles.getStartedText}>{row.address}</Text>
+          <Account style={styles.getStartedText} address={row.address} balance={row.balance} />
         </View>
       )
     });
