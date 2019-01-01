@@ -1,40 +1,41 @@
 import React, { Component, Fragment } from 'react';
 import { Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { connect } from 'react-reduc';
 import Address from './Address';
+import {setAccountBalance} from '../actions/account';
 
 class Account extends Component {
 
 
   constructor(props) {
     super(props);
-    this.state = {
-      address: props.address,
-      balance: props.balance
-    };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.address !== this.props.address) {
-      this.setState({ address: nextProps.address});
-    }
-    if(nextProps.balance !== this.props.balance) {
-      this.setState({ balance: nextProps.balance});
-    }
+    this.state = {};
   }
 
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.getStartedText}>
-            <Address address={this.state.address} />
+            <Address address={this.props.address} />
         </Text>
-        <Text style={styles.getStartedText}>{this.state.balance}</Text>
+        <Text style={styles.getStartedText}>{this.props.balance.substring ? this.props.balance : "Loading Balance"}</Text>
       </View>
     )
   }
 }
 
-export default Account;
+const mapStateToProps = (state) => {
+  return {
+    address: state.address,
+    balance: state.balance
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({setAccountBalance}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Account);
 
 
 const styles = StyleSheet.create({

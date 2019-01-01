@@ -29,10 +29,26 @@ class Portfolio extends Component {
   }
 
   loadAccounts = () => {
-    return [ { address : "TBCKCAmFEdrGY4xhTkbWDRNjDZHNXk129r", balance : 1.001 },
-             { address : "TLUJk2e4bygvCZo7WTCZU33WaTwSbfVu3v", balance : 2.002 }];
+    //Get ADDRESSES
+    const addresses = [ { address : "TBCKCAmFEdrGY4xhTkbWDRNjDZHNXk129r"},
+             { address : "TLUJk2e4bygvCZo7WTCZU33WaTwSbfVu3v"}];
+    //Get Balance for ADDRESSES
+    const accounts = addresses.map( (addr) =>
+      ({ address : addr.address, balance : this.getBalance(addr.address)})
+    );
+
+    return accounts;
+    //return [ { address : "TBCKCAmFEdrGY4xhTkbWDRNjDZHNXk129r", balance : 1.001 },
+    //         { address : "TLUJk2e4bygvCZo7WTCZU33WaTwSbfVu3v", balance : 2.002 }];
     //return new Account("TBCKCAmFEdrGY4xhTkbWDRNjDZHNXk129r");
   }
+
+  async getBalance(address) {
+    const balance = await this.tronService.getBalance(address);
+    
+    return balance;
+  }
+
 }
 
 export default Portfolio;
