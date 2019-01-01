@@ -1,11 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { connect } from 'react-reduc';
 import Address from './Address';
-import {setAccountBalance} from '../actions/account';
 
 class Account extends Component {
-
 
   constructor(props) {
     super(props);
@@ -24,18 +21,8 @@ class Account extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    address: state.address,
-    balance: state.balance
-  }
-}
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({setAccountBalance}, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Account);
+export default Account;
 
 
 const styles = StyleSheet.create({
