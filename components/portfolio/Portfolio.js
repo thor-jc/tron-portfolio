@@ -62,9 +62,8 @@ class Portfolio extends Component {
     accounts.map( (account) => {
         const balance = this.tronService.getBalance(account.address).then(balance => {
           this.updateBalance(account.id, balance);
-
         });
-        console.log("Leaving Promise.all::updateBalances::" + this.state.accounts);
+        console.log("Leaving Promise.then::updateBalances::" + this.state.accounts);
     });
     console.log("Leaving updateBalances::" + JSON.stringify(this.state.accounts));
   }

@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import axios from "axios";
 
 const TronWeb = require('tronweb')
 
@@ -27,15 +28,27 @@ export class TronWebService extends Component {
     super(props);
     this.state = {
       lastRefresh:  "",
-      currentBlock: ""
+      currentBlockHeader: ""
     };
   }
 
   componentDidMount() {
     this.refreshNetworkConnection();
-    setInterval( () => {
+    this.refreshTicker();
+    let netRefresh = setInterval( () => {
       this.refreshNetworkConnection();
-    }, 30000);
+      console.log("SERVICE STATE::" + JSON.stringify(this.state));
+    }, 10000);
+    let tickerRefresh = setInterval( () => {
+      this.refreshTicker();
+    }, 60000);
+    this.setState({ netRefresh : netRefresh});
+    this.setState({ tickerRefresh : tickerRefresh});
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.netRefresh);
+    clearInterval(this.state.tickerRefresh);
   }
 
   TronWebService() {
@@ -47,7 +60,10 @@ export class TronWebService extends Component {
       <View style={styles.container}>
        <Text style={styles.tabBarInfoText}>Tron Network Info</Text>
        <Text style={styles.tabBarInfoText}>{this.state.lastRefresh}</Text>
-       <Text style={styles.tabBarInfoText}>Block [{this.state.currentBlock.block_header && this.state.currentBlock.block_header.raw_data ? this.state.currentBlock.block_header.raw_data.number :"Loading Current Block"}]</Text>
+       <Text style={styles.tabBarInfoText}>Block [{this.state.currentBlockHeader && this.state.currentBlockHeader.raw_data ? this.state.currentBlockHeader.raw_data.number :"Loading Current Block"}]</Text>
+       <Text style={styles.tabBarInfoText}>Rank [{this.state.ticker ? this.state.ticker.rank :"Loading Ticker"}]</Text>
+       <Text style={styles.tabBarInfoText}>Symbol [{this.state.ticker ? this.state.ticker.symbol :"Loading Ticker"}]</Text>
+       <Text style={styles.tabBarInfoText}>Price [{this.state.ticker ? this.state.ticker.price_usd :"Loading Ticker"}]</Text>
      </View>
     )
   }
@@ -61,10 +77,17 @@ export class TronWebService extends Component {
     this.setState({lastRefresh: new Date().toISOString()});
   }
 
+  refreshTicker = async () => {
+     axios.get(`https://api.coinmarketcap.com/v1/ticker/tronix/`).then( response => {
+       this.setState( { ticker : response.data[0] } );
+       console.log("Inside refreshTicker.then" + JSON.stringify(response.data[0]));
+    });
+  }
+
   getCurrentBlock = () => {
     tronWeb.trx.getCurrentBlock().then( block => {
       ///console.log("CURRENT BLOCK::" + JSON.stringify(block));
-      this.setState({ currentBlock : block });
+      this.setState({ currentBlockHeader : block.block_header });
     });
   }
 
