@@ -2,13 +2,13 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
-
-const AppContext = React.createContext();
+import { AppContextProvider } from './AppContext';
 
 export default class App extends React.Component {
 
   state = {
     isLoadingComplete: false,
+    user: "timmy"
   };
 
   render() {
@@ -22,12 +22,12 @@ export default class App extends React.Component {
       );
     } else {
       return (
-        <AppContext.Provider value={this.state}>
+        <AppContextProvider value={this.state}>
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
             <AppNavigator />
-          </View> 
-        </AppContext.Provider>
+          </View>
+        </AppContextProvider>
       );
     }
   }

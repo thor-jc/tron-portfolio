@@ -15,7 +15,7 @@ class Account extends Component {
         <Text style={styles.getStartedText}>
             <Address address={this.props.address} />
         </Text>
-        <Text style={styles.getStartedText}>{this.props.balance.substring ? this.props.balance : "Loading Balance"}</Text>
+        <Text style={styles.getStartedText}>{this.props.balance > 0 ? this.props.balance : "Loading Balance"}</Text>
       </View>
     )
   }

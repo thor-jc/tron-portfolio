@@ -24,9 +24,12 @@ export class TronWebService {
 
     console.log("entering getBalance for address: " + address );
 
-      tronWeb.trx.getBalance(address).then(balance => {
-          console.log("Balance::" + balance / 1000000);
+    const balance = await tronWeb.trx.getBalance(address).then(balance => {
+          balance /= 1000000;
+          console.log("Balance::" + balance);
+          return balance;
       }).catch(err => console.error(err));
+      return balance;
   }
 
 }
