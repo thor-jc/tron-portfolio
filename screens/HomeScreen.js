@@ -1,4 +1,5 @@
 import React from 'react';
+import { TronWebService } from '../services/TronWebService';
 import {
   Image,
   Platform,
@@ -26,6 +27,7 @@ export default class HomeScreen extends React.Component {
           </View>
 
           <View style={styles.getStartedContainer}>
+            <TronWebService />
             <Portfolio />
           </View>
         </ScrollView>

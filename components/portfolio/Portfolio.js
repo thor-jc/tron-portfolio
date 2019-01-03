@@ -3,6 +3,7 @@ import { Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View }
 import { TronWebService } from '../../services/TronWebService';
 import AccountList from './AccountList';
 import { AppContextConsumer } from '../../AppContext';
+
 class Portfolio extends Component {
 
   constructor() {
@@ -56,15 +57,15 @@ class Portfolio extends Component {
     return balance;
   }
 
-  updateBalances = async(accounts) => {
+  updateBalances = (accounts) => {
     console.log("Entering updateBalances::" + JSON.stringify(accounts));
-    await Promise.all(accounts.map( (account) => {
+    accounts.map( (account) => {
         const balance = this.tronService.getBalance(account.address).then(balance => {
           this.updateBalance(account.id, balance);
 
         });
         console.log("Leaving Promise.all::updateBalances::" + this.state.accounts);
-      }));
+    });
     console.log("Leaving updateBalances::" + JSON.stringify(this.state.accounts));
   }
 

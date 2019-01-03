@@ -28,7 +28,7 @@ class Address extends Component {
 
   getAddressAbbr(address) {
     let first4 = address.substring(0, 4);
-    let last4 = address.substring(address.length - 5);
+    let last4 = address.substring(address.length - 4);
 
     return first4 + '--=--' + last4;
   }
