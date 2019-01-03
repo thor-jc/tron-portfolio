@@ -33,6 +33,9 @@ export class TronWebService extends Component {
 
   componentDidMount() {
     this.refreshNetworkConnection();
+    setInterval( () => {
+      this.refreshNetworkConnection();
+    }, 30000);
   }
 
   TronWebService() {
@@ -44,7 +47,7 @@ export class TronWebService extends Component {
       <View style={styles.container}>
        <Text style={styles.tabBarInfoText}>Tron Network Info</Text>
        <Text style={styles.tabBarInfoText}>{this.state.lastRefresh}</Text>
-       <Text style={styles.tabBarInfoText}>Block [{this.state.currentBlock.block_header.raw_data.number ? this.state.currentBlock.block_header.raw_data.number :"Loading Current Block"}]</Text>
+       <Text style={styles.tabBarInfoText}>Block [{this.state.currentBlock.block_header && this.state.currentBlock.block_header.raw_data ? this.state.currentBlock.block_header.raw_data.number :"Loading Current Block"}]</Text>
      </View>
     )
   }
@@ -60,7 +63,7 @@ export class TronWebService extends Component {
 
   getCurrentBlock = () => {
     tronWeb.trx.getCurrentBlock().then( block => {
-      console.log("CURRENT BLOCK::" + JSON.stringify(block));
+      ///console.log("CURRENT BLOCK::" + JSON.stringify(block));
       this.setState({ currentBlock : block });
     });
   }
