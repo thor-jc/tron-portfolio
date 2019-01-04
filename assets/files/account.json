@@ -1,0 +1,76 @@
+{
+  "representative": {
+    "enabled": false,
+    "lastWithDrawTime": 0,
+    "allowance": 0,
+    "url": ""
+  },
+  "accountType": "0",
+  "name": "thor-ledger-wallet",
+  "address": "TLUJk2e4bygvCZo7WTCZU33WaTwSbfVu3v",
+  "bandwidth": {
+    "freeNetUsed": 0,
+    "freeNetLimit": 5000,
+    "freeNetRemaining": 5000,
+    "freeNetPercentage": 0,
+    "netUsed": 0,
+    "netLimit": 112548,
+    "netRemaining": 112548,
+    "netPercentage": 0,
+    "assets": {
+      "IGG": {
+        "netUsed": 0,
+        "netLimit": 0,
+        "netRemaining": 0,
+        "netPercentage": 0
+      }
+    },
+    "energyUsed": 0,
+    "energyLimit": 0,
+    "energyRemaining": 0,
+    "energyPercentage": 0,
+    "storageUsed": 0,
+    "storageLimit": 0,
+    "storageRemaining": 0,
+    "storagePercentage": 0,
+    "totalNetLimit": 43200000000,
+    "totalNetWeight": 7292838687,
+    "totalEnergyLimit": 100000000000,
+    "totalEnergyWeight": 329296994
+  },
+  "balances": [{
+    "name": "TRX",
+    "address": "TLUJk2e4bygvCZo7WTCZU33WaTwSbfVu3v",
+    "balance": 903.583266
+  }, {
+    "name": "IGG",
+    "address": "TSbhZijH2t7Qn1UAHAu7PBHQdVAvRwSyYr",
+    "balance": 13
+  }],
+  "balance": 903583266,
+  "tokenBalances": [{
+    "name": "TRX",
+    "address": "TLUJk2e4bygvCZo7WTCZU33WaTwSbfVu3v",
+    "balance": 903.583266
+  }, {
+    "name": "IGG",
+    "address": "TSbhZijH2t7Qn1UAHAu7PBHQdVAvRwSyYr",
+    "balance": 13
+  }],
+  "trc20token_balances": null,
+  "frozen": {
+    "total": 19000000000,
+    "balances": [{
+      "expires": 1546530390000,
+      "amount": 19000000000
+    }]
+  },
+  "accountResource": {
+    "frozen_balance_for_energy": {
+      "expire_time": 0,
+      "frozen_balance": 0
+    }
+  },
+  "allowExchange": [],
+  "exchanges": []
+}

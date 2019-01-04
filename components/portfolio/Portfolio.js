@@ -52,6 +52,8 @@ class Portfolio extends Component {
     //return new Account("TBCKCAmFEdrGY4xhTkbWDRNjDZHNXk129r");
   }
 
+
+
   getBalance = async(address) => {
     const balance = await this.tronService.getBalance(address);
     return balance;

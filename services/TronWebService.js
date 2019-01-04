@@ -38,7 +38,7 @@ export class TronWebService extends Component {
     let netRefresh = setInterval( () => {
       this.refreshNetworkConnection();
       console.log("SERVICE STATE::" + JSON.stringify(this.state));
-    }, 10000);
+    }, 60000);
     let tickerRefresh = setInterval( () => {
       this.refreshTicker();
     }, 60000);
@@ -78,6 +78,7 @@ export class TronWebService extends Component {
   }
 
   refreshTicker = async () => {
+    //https://wlcyapi.tronscan.org/api/exchange/topprice/$TRX
      axios.get(`https://api.coinmarketcap.com/v1/ticker/tronix/`).then( response => {
        this.setState( { ticker : response.data[0] } );
        console.log("Inside refreshTicker.then" + JSON.stringify(response.data[0]));
@@ -90,6 +91,15 @@ export class TronWebService extends Component {
       this.setState({ currentBlockHeader : block.block_header });
     });
   }
+
+
+  async getAccount(address) {
+    //https://wlcyapi.tronscan.org/api/v2/account/TBCKCAmFEdrGY4xhTkbWDRNjDZHNXk129r
+    let {data} = await axios.get("https://wlcyapi.tronscan.org/api/v2/account/" + address);
+    return data;
+  }
+
+
 
   getBalance = async(address) => {
 
