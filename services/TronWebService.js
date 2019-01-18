@@ -38,10 +38,10 @@ export class TronWebService extends Component {
     let netRefresh = setInterval( () => {
       this.refreshNetworkConnection();
       console.log("SERVICE STATE::" + JSON.stringify(this.state));
-    }, 60000);
+    }, 30000);
     let tickerRefresh = setInterval( () => {
       this.refreshTicker();
-    }, 60000);
+    }, 30000);
     this.setState({ netRefresh : netRefresh});
     this.setState({ tickerRefresh : tickerRefresh});
   }

@@ -11,30 +11,15 @@ import Colors from '../constants/Colors';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
-},
-  {
-    initialRouteName: 'Home',
-    /* The header config from HomeScreen is now here */
-    navigationOptions: {
-      headerStyle: {
-        backgroundColor: '#f4511e',
-      },
-      headerTintColor: '#000',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-        color: 'red',
-      },
-    },
-  });
+
+});
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Accounts',
-  headerStyle: {
-    backgroundColor: '#f4511e',
-  },
-  headerTintColor: '#fff',
-  headerTitleStyle: {
-    fontWeight: 'bold',
+  tabBarOptions: {
+    activeTintColor: 'red',
+    tabStyle: {
+      backgroundColor: 'black'
+    },
   },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -53,9 +38,16 @@ const TronStack = createStackNavigator({
 });
 
 TronStack.navigationOptions = {
-  tabBarLabel: 'Network',
-  tabBarLabelActive: { color : 'red' },
-  tabBarIcon: ({ focused }) => (
+  tabBarLabel: "Tron Network",
+  barStyle: {
+    backgroundColor: '#f4511e',
+  },
+  tabBarOptions: {
+    activeTintColor: 'red',
+    tabStyle: {
+      backgroundColor: 'black'
+    },
+  },tabBarIcon: ({ focused }) => (
     <IcoMoonIcon
       focused={focused}
       name={ 'tron-network-logo' }
@@ -70,7 +62,12 @@ const SettingsStack = createStackNavigator({
 
 SettingsStack.navigationOptions = {
   tabBarLabel: 'Settings',
-  tabBarIcon: ({ focused }) => (
+  tabBarOptions: {
+    activeTintColor: 'red',
+    tabStyle: {
+      backgroundColor: 'black'
+    },
+  },tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
       name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
