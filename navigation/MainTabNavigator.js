@@ -4,17 +4,16 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import IcoMoonIcon from '../components/IcoMoonIcon';
-import HomeScreen from '../screens/HomeScreen';
+import AccountsScreen from '../screens/AccountsScreen';
 import TronScreen from '../screens/TronScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import Colors from '../constants/Colors';
 
-const HomeStack = createStackNavigator({
-  Home: HomeScreen,
-
+const AccountsStack = createStackNavigator({
+  Accounts: AccountsScreen,
 });
 
-HomeStack.navigationOptions = {
+AccountsStack.navigationOptions = {
+  tabBarLabel: 'Accounts',
   tabBarOptions: {
     activeTintColor: 'red',
     tabStyle: {
@@ -38,7 +37,7 @@ const TronStack = createStackNavigator({
 });
 
 TronStack.navigationOptions = {
-  tabBarLabel: "Tron Network",
+  tabBarLabel: 'Tron Network',
   barStyle: {
     backgroundColor: '#f4511e',
   },
@@ -47,10 +46,11 @@ TronStack.navigationOptions = {
     tabStyle: {
       backgroundColor: 'black'
     },
-  },tabBarIcon: ({ focused }) => (
+  },
+  tabBarIcon: ({ focused }) => (
     <IcoMoonIcon
       focused={focused}
-      name={ 'tron-network-logo' }
+      name={'tron-network-logo'}
     />
   ),
 };
@@ -67,7 +67,8 @@ SettingsStack.navigationOptions = {
     tabStyle: {
       backgroundColor: 'black'
     },
-  },tabBarIcon: ({ focused }) => (
+  },
+  tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
       name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'}
@@ -76,7 +77,7 @@ SettingsStack.navigationOptions = {
 };
 
 export default createBottomTabNavigator({
-  HomeStack,
+  AccountsStack,
   TronStack,
   SettingsStack,
 });

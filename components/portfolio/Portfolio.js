@@ -1,50 +1,36 @@
-import React, { Component, Fragment } from 'react';
-import { Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, View } from 'react-native';
 import { TronWebService } from '../../services/TronWebService';
 import AccountList from './AccountList';
 import { AppContextConsumer } from '../../AppContext';
 
+const tronService = new TronWebService();
+
+
 class Portfolio extends Component {
 
-  constructor() {
-    super();
-    this.state = {
-      accounts:  [],
-    };
-    this.tronService = new TronWebService();
-  }
 
   componentDidMount() {
     const loadedAccounts = this.loadAccounts();
-    this.setState( { accounts : loadedAccounts } );
+//    this.setState( { accounts : loadedAccounts } );
     this.updateBalances(loadedAccounts);
     //this.tronService.getBalance("TBCKCAmFEdrGY4xhTkbWDRNjDZHNXk129r");
   }
 
-  render() {
-    return (
-      <AppContextConsumer>
-           { (appContext) =>
-             (
-               <View style={styles.container}>
-                <Text style={styles.tabBarInfoText}>Welcome {appContext.user}</Text>
-                <AccountList accounts={this.state.accounts}/>
-              </View>
-            )
-          }
-      </AppContextConsumer>
-    )
+  getBalance = async(address) => {
+    const balance = await tronService.getBalance(address);
+    return balance;
   }
 
   loadAccounts = () => {
     //Get ADDRESSES
-    const savedAccounts = [ { id:"2307292360", address : "TBCKCAmFEdrGY4xhTkbWDRNjDZHNXk129r"},
-             { id:"297492953", address : "TLUJk2e4bygvCZo7WTCZU33WaTwSbfVu3v"}];
+    const savedAccounts = [{ id: '2307292360', address: 'TBCKCAmFEdrGY4xhTkbWDRNjDZHNXk129r' },
+             { id: '297492953', address: 'TLUJk2e4bygvCZo7WTCZU33WaTwSbfVu3v' }];
     //Get Balance for ADDRESSES
-    const accounts = savedAccounts.map( (account) =>
-      ({ id : account.id, address : account.address, balance : -1})
+    const accounts = savedAccounts.map((account) =>
+      ({ id: account.id, address: account.address, balance: -1 })
     );
-    console.log("Accounts::" + JSON.stringify(accounts));
+    console.log(`Accounts::${JSON.stringify(accounts)}`);
 
     return accounts;
     //return [ { address : "TBCKCAmFEdrGY4xhTkbWDRNjDZHNXk129r", balance : 1.001 },
@@ -52,16 +38,9 @@ class Portfolio extends Component {
     //return new Account("TBCKCAmFEdrGY4xhTkbWDRNjDZHNXk129r");
   }
 
-
-
-  getBalance = async(address) => {
-    const balance = await this.tronService.getBalance(address);
-    return balance;
-  }
-
   updateBalances = (accounts) => {
-    console.log("Entering updateBalances::" + JSON.stringify(accounts));
-    accounts.map( (account) => {
+    console.log(`Entering updateBalances::${  JSON.stringify(accounts)}`);
+    this.props.accounts.map( (account) => {
         const balance = this.tronService.getBalance(account.address).then(balance => {
           this.updateBalance(account.id, balance);
         });
@@ -69,24 +48,15 @@ class Portfolio extends Component {
     });
     console.log("Leaving updateBalances::" + JSON.stringify(this.state.accounts));
   }
-
-  updateBalance = (id, newBalance) => {
-    console.log("entering updateBalance:: (" + id + ", " + newBalance + ")");
-    this.setState(state => {
-      const accounts = state.accounts.map((item, j) => {
-        if (state.accounts[j].id === id) {
-          return {...item, balance: newBalance};
-        } else {
-          return item;
-        }
-      });
-      console.log("Leaving updateBalance::" + JSON.stringify(accounts));
-      return {
-        accounts,
-      };
-    });
+  
+  render() {
+    return (
+      <View style={styles.container}>
+       <Text style={styles.tabBarInfoText}>Welcome {this.props.user}</Text>
+        <AccountList accounts={this.props.accounts} />
+      </View>
+    )
   }
-
 
 }
 

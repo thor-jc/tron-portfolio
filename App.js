@@ -1,64 +1,67 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
+import { Provider } from 'react-redux';
+
+import store from './store';
 import AppNavigator from './navigation/AppNavigator';
-import { AppContextProvider } from './AppContext';
+
+
+const robotDev = require('./assets/images/robot-dev.png');
+const robotProd = require('./assets/images/robot-prod.png');
+const spaceMono = require('./assets/fonts/SpaceMono-Regular.ttf');
+const icoMoon = require('./assets/fonts/icomoon.ttf');
 
 export default class App extends React.Component {
 
-  state = {
-    isLoadingComplete: false,
-    user: "timmy",
-  };
+  state = { isLoadingComplete: false };
 
-  render() {
-    if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
-      return (
-        <AppLoading
-          startAsync={this._loadResourcesAsync}
-          onError={this._handleLoadingError}
-          onFinish={this._handleFinishLoading}
-        />
-      );
-    } else {
-      return (
-        <AppContextProvider value={this.state}>
-          <View style={styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            <AppNavigator />
-          </View>
-        </AppContextProvider>
-      );
-    }
-  }
-
-  _loadResourcesAsync = async () => {
-    return Promise.all([
+  loadResourcesAsync = async () => Promise.all([
       Asset.loadAsync([
-        require('./assets/images/robot-dev.png'),
-        require('./assets/images/robot-prod.png'),
+        robotDev,
+        robotProd,
       ]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar
         ...Icon.Ionicons.font,
         // We include SpaceMono because we use it in HomeScreen.js. Feel free
         // to remove this if you are not using it in your app
-        'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
-        'icomoon': require('./assets/fonts/icomoon.ttf'),
+        'space-mono': spaceMono,
+        icomoon: icoMoon,
 
       }),
     ]);
-  };
 
-  _handleLoadingError = error => {
+  handleLoadingError = error => {
     // In this case, you might want to report the error to your error
     // reporting service, for example Sentry
     console.warn(error);
   };
 
-  _handleFinishLoading = () => {
+  handleFinishLoading = () => {
     this.setState({ isLoadingComplete: true });
   };
+
+
+render() {
+  if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
+    return (
+      <AppLoading
+        startAsync={this.loadResourcesAsync}
+        onError={this.handleLoadingError}
+        onFinish={this.handleFinishLoading}
+      />
+    );
+  }
+    return (
+      <Provider store={store}>
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <AppNavigator />
+        </View>
+      </Provider>
+    );
+  }
 }
 
 

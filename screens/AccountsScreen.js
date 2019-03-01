@@ -1,24 +1,17 @@
 import React from 'react';
-import xhr from "axios";
 import {
-  Image,
-  Platform,
   ScrollView,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
 import Portfolio from '../components/portfolio/Portfolio';
-import Profile from '../components/user/Profile';
-import { WebBrowser } from 'expo';
 
-export default class HomeScreen extends React.Component {
+export default class AccountsScreen extends React.Component {
 
   static navigationOptions = {
     title: 'Accounts',
     gesturesEnabled: true,
-    headerTintColor : 'white',
+    headerTintColor: 'white',
 //    headerRight: <Profile />,
     headerStyle: {
       backgroundColor: '#f4511e',
@@ -34,7 +27,7 @@ export default class HomeScreen extends React.Component {
           </View>
         </ScrollView>
       </View>
-    )
+    );
   }
 }
 

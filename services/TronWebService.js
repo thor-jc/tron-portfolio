@@ -41,7 +41,7 @@ export class TronWebService extends Component {
     }, 30000);
     let tickerRefresh = setInterval( () => {
       this.refreshTicker();
-    }, 30000);
+    }, 300000);
     this.setState({ netRefresh : netRefresh});
     this.setState({ tickerRefresh : tickerRefresh});
   }
