@@ -1,8 +1,9 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 
+import * as actions from './actions';
 import store from './store';
 import AppNavigator from './navigation/AppNavigator';
 
@@ -12,9 +13,8 @@ const robotProd = require('./assets/images/robot-prod.png');
 const spaceMono = require('./assets/fonts/SpaceMono-Regular.ttf');
 const icoMoon = require('./assets/fonts/icomoon.ttf');
 
-export default class App extends React.Component {
+class App extends React.Component {
 
-  state = { isLoadingComplete: false };
 
   loadResourcesAsync = async () => Promise.all([
       Asset.loadAsync([
@@ -39,20 +39,22 @@ export default class App extends React.Component {
   };
 
   handleFinishLoading = () => {
-    this.setState({ isLoadingComplete: true });
+    //this.props.appLoadingComplete();
   };
 
 
-render() {
-  if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
-    return (
-      <AppLoading
-        startAsync={this.loadResourcesAsync}
-        onError={this.handleLoadingError}
-        onFinish={this.handleFinishLoading}
-      />
-    );
-  }
+  render() {
+    if (!this.props.isLoadingComplete && !this.props.skipLoadingScreen) {
+      return (
+        <Provider store={store}>
+          <AppLoading
+            startAsync={this.loadResourcesAsync}
+            onError={this.handleLoadingError}
+            onFinish={this.handleFinishLoading}
+          />
+        </Provider>
+      );
+    }
     return (
       <Provider store={store}>
         <View style={styles.container}>
@@ -63,6 +65,12 @@ render() {
     );
   }
 }
+
+function mapStateToProps({ app }) {
+  return { app };
+}
+
+export default App;
 
 
 const styles = StyleSheet.create({

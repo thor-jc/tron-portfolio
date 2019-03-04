@@ -3,6 +3,4 @@ import {
 } from './types';
 
 
-export const appLoadingComplete = () => {
-    return { type: APP_LOADING_COMPLETE };
-}
+export const appLoadingComplete = () => ({ type: APP_LOADING_COMPLETE });

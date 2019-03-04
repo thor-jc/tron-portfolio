@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Platform, StyleSheet, Text, View } from 'react-native';
+import * as actions from '../../actions';
 import { TronWebService } from '../../services/TronWebService';
 import AccountList from './AccountList';
-import { AppContextConsumer } from '../../AppContext';
 
 const tronService = new TronWebService();
-
 
 class Portfolio extends Component {
 
 
   componentDidMount() {
-    const loadedAccounts = this.loadAccounts();
+//    const loadedAccounts = this.loadAccounts();
 //    this.setState( { accounts : loadedAccounts } );
-    this.updateBalances(loadedAccounts);
+//    this.updateBalances(loadedAccounts);
     //this.tronService.getBalance("TBCKCAmFEdrGY4xhTkbWDRNjDZHNXk129r");
   }
 
@@ -38,29 +38,31 @@ class Portfolio extends Component {
     //return new Account("TBCKCAmFEdrGY4xhTkbWDRNjDZHNXk129r");
   }
 
-  updateBalances = (accounts) => {
-    console.log(`Entering updateBalances::${  JSON.stringify(accounts)}`);
-    this.props.accounts.map( (account) => {
-        const balance = this.tronService.getBalance(account.address).then(balance => {
-          this.updateBalance(account.id, balance);
-        });
-        console.log("Leaving Promise.then::updateBalances::" + this.state.accounts);
-    });
-    console.log("Leaving updateBalances::" + JSON.stringify(this.state.accounts));
-  }
-  
+  // updateBalances = (accounts) => {
+  //   // console.log(`Entering updateBalances::${  JSON.stringify(accounts)}`);
+  //   // this.props.accounts.map( (account) => {
+  //   //     const balance = this.tronService.getBalance(account.address).then(balance => {
+  //   //       this.updateBalance(account.id, balance);
+  //   //     });
+  //   //     console.log("Leaving Promise.then::updateBalances::" + this.state.accounts);
+  //   // });
+  //   // console.log("Leaving updateBalances::" + JSON.stringify(this.state.accounts));
+  // }
+
   render() {
     return (
       <View style={styles.container}>
        <Text style={styles.tabBarInfoText}>Welcome {this.props.user}</Text>
         <AccountList accounts={this.props.accounts} />
       </View>
-    )
+    );
   }
 
 }
 
-export default Portfolio;
+const mapStateToProps = ({ accounts }) => ({ accounts });
+
+export default connect(mapStateToProps, actions)(Portfolio);
 
 const styles = StyleSheet.create({
   container: {
